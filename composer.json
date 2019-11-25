@@ -1,0 +1,26 @@
+{
+    "name": "okvpn/packagist-bundle",
+    "type": "library",
+    "license": "MIT",
+    "description": "Okvpn packagist bundle",
+    "keywords": ["packagist"],
+    "authors": [
+        {
+            "name": "Uladzimir Tsykun",
+            "homepage": "https://github.com/vtsykun",
+            "email": "vtsykun@okvpn.org"
+        }
+    ],
+    "require": {
+        "php":">=7.1"
+    },
+    "autoload": {
+        "psr-4": { "Okvpn\\Bundle\\PackagistBundle\\": "" },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "suggest": {
+        "oro/platform": "For using the packagist bundle."
+    }
+}
