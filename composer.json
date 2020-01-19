@@ -1,18 +1,18 @@
 {
-    "name": "okvpn/packagist-bundle",
-    "type": "library",
+    "name": "okvpn/packagist-customization",
+    "type": "project",
     "license": "MIT",
-    "description": "Okvpn packagist bundle",
-    "keywords": ["packagist"],
+    "description": "Okvpn packagist example customization",
+    "keywords": ["packagist", "packeton", "satis"],
     "authors": [
         {
             "name": "Uladzimir Tsykun",
-            "homepage": "https://github.com/vtsykun",
-            "email": "vtsykun@okvpn.org"
+            "homepage": "https://github.com/vtsykun"
         }
     ],
     "require": {
-        "php":">=7.1"
+        "php":">=7.1",
+        "okvpn/packeton": "dev-master"
     },
     "autoload": {
         "psr-4": { "Okvpn\\Bundle\\PackagistBundle\\": "" },
@@ -20,7 +20,6 @@
             "/Tests/"
         ]
     },
-    "suggest": {
-        "oro/platform": "For using the packagist bundle."
-    }
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

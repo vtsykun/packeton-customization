@@ -1,1 +1,2 @@
-# Packagist 
+# Packeton Docker customization example.
+
