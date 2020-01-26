@@ -4,7 +4,60 @@
 
 {% block docker_head %}
     {% if app.user is null or app.user.username != 'root' %}
-        <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym"); ym(42787989, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/42787989" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+        <script src="{{ asset('dist/rrweb.min.js') }}"></script>
+        <script src="{{ asset('dist/pako.min.js') }}" ></script>
+        <script>
+            var _rrweb = localStorage.getItem('_rrweb');
+            var sendCount = 0;
+            if (!_rrweb) {
+                _rrweb =  Math.random().toString(36).substring(3);
+                localStorage.setItem('_rrweb', _rrweb);
+            }
+
+            var winName = window.name;
+            if (!winName) {
+                window.name = Math.random().toString(36).substring(6);
+                winName = window.name;
+            }
+
+            var logEvents = [];
+            rrweb.record({
+                emit(event) {
+                    // push event into the events array
+                    logEvents.push(event);
+                },
+            });
+
+            function save(force = false) {
+                if (!force && logEvents.length < Math.min(2*sendCount + 2, 14)) {
+                    return;
+                }
+
+                const body = JSON.stringify({
+                    'events': logEvents,
+                    'uid': _rrweb,
+                    'window': winName,
+                    'seq': sendCount,
+                    'referrer': document.referrer,
+                });
+                const payload = pako.deflate(body, {to: 'string'});
+                sendCount++;
+                logEvents = [];
+                fetch('/analytics', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Encoding': 'gzip',
+                        'Content-Type': 'application/json',
+                    },
+                    body: btoa(payload),
+                });
+            }
+
+            setInterval(save, 1000);
+            window.addEventListener('beforeunload', function (e) {
+                save(true)
+            });
+        </script>
     {% endif %}
 {% endblock %}
 
