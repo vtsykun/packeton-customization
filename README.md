@@ -1,3 +1,8 @@
 # Packeton Docker customization example.
 
-This is 
+Demo application demo.packeton.org 
+
+Run to start container
+```
+docker-compose up -d
+```
