@@ -58,6 +58,10 @@
             <input class="btn btn-block btn-success btn-lg" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
         </form>
         <hr>
+
+        {% if loginProviders is defined and loginProviders|length > 0 %}
+            {% include 'user/login_providers.html.twig' %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
